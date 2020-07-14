@@ -1,17 +1,15 @@
 function retrieveFileData(){
     let fileChanges = [...document.getElementsByClassName('diff-table js-diff-table')];
-    let adds=[];
-    let dels=[];
+    let changes=[];
     fileChanges.forEach(change=>{
-        adds.push(retrieveChangedFileLines(change, 'blob-code blob-code-addition'));
-        dels.push(retrieveChangedFileLines(change,'blob-code blob-code-deletion'));
-        
+        changes.push(retrieveChangedFileLines(change, 'blob-code'))   
     })
 
 
     let fileInfo = [...document.getElementsByClassName('file-info')];
     let names = retrieveFileNames(fileInfo);
-    let payload = {names:names, added:adds, deleted:dels};
+    
+    let payload = {names:names, changed:changes, type:'git-changes'};
     return payload;
 }
 
@@ -27,12 +25,25 @@ function retrieveFileNames(fileInfoArray){
 function retrieveChangedFileLines(fileElement, className){
     let lines = [];
     
-    let elementNodes = [...fileElement.getElementsByClassName(className)];
-    let elements = [...elementNodes];
+    let elements = [...fileElement.getElementsByClassName(className)];
     elements.forEach(element =>{
-        lines.push(element.getElementsByTagName('span')[0].textContent);
+        let classname = element.className;
+        if (!classname.includes('blob-code-inner') && !className.includes('blob-code-hunk') ){
+            lineObj = {};
+            if (isAdd(classname)){
+                lineObj.isAdd = true;
+            } else{
+                lineObj.isAdd = false;
+            }
+            lineObj.line = element.getElementsByTagName('span')[0].textContent;
+            lines.push(lineObj);
+        }
     })
     return lines;
+}
+
+function isAdd(classname){
+    return classname.includes('blob-code-addition');
 }
 
 

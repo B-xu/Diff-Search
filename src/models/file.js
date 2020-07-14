@@ -1,21 +1,34 @@
 class File{
-    additions=[];
-    deletions=[];
-    concat_additions;
-    concat_deletions;
+    changes=[];
+    addChanges=[]
+    deletedChanges=[];
+    concat_changes;
 
-    constructor(name, adds, deletes){
+    constructor(name, changes){
         this.name = name;
-        this.additions=adds;
-        this.deletions=deletes;
+        this.changes=changes.map(change=>change.line);
+        this.setAddChanges(changes);
+        this.setDelChanges(changes);
     }
 
-    setAdditions(adds){
-        this.additions=adds;
+    setAddChanges(changes){
+        this.addChanges = changes.map(change=>this.setBooleanChanges(true,change));
     }
 
-    setDeletions(dels){
-        this.deletions= dels;
+    setDelChanges(changes){
+        this.deletedChanges = changes.map(change=>this.setBooleanChanges(false, change))
+    }
+
+    setBooleanChanges(bool, change){
+        if (change.isAdd === bool){
+            return change.line;
+        } else {
+            return '\n';
+        }
+    }
+
+    setChanges(changes){
+        this.changes=changes;
     }
 }
 

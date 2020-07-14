@@ -1,12 +1,11 @@
-import File from '../models/file.js'
-
+import File from '../models/file.js';
 export default class retrieveDiff {
     constructor(){
     }
-    retrieveFiles(fileNames, addedLines, deletedLines){
+    retrieveFiles(fileNames, changedLines){
         let files = []
         fileNames.forEach(function(name, index){
-            let file = new File(name, addedLines[index], deletedLines[index]);
+            let file = new File(name, changedLines[index]);
             
             files.push(file);
         });
