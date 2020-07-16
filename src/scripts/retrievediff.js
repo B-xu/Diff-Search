@@ -1,5 +1,7 @@
-import File from '../models/file.js';
+import {searchTypes,File} from '../models/file.js';
 export default class retrieveDiff {
+    files = [];
+
     constructor(){
     }
     retrieveFiles(fileNames, changedLines){
@@ -9,6 +11,7 @@ export default class retrieveDiff {
             
             files.push(file);
         });
+        this.files = files;
         return files;
     }
 

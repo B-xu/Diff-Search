@@ -1,4 +1,5 @@
 import retrieveDiff from '../scripts/retrievediff.js';
+import {searchTypes, File} from '../models/file.js'
 
 let retrieve = new retrieveDiff();
 
