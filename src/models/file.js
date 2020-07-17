@@ -1,5 +1,5 @@
 export const searchTypes = {ALL:'all', ADD:'add', DEL:'delete'};
-
+import Search from './search.js'
 class File{
     name = '';
     changes=[];
@@ -50,24 +50,14 @@ class File{
         }
 
         if (searchLines.length >= 3){
-            let middleLines = searchLines.slice(1,searchLines.length - 1);
+            result = Search.findMultipleLines(searchRange, searchLines);
         } else if (searchLines.length === 1){
             let searchLine = searchLines[0];
-
+            result = Search.findSingleLine(searchRange, searchLine);
         } else {
-            // two-line case
-
+            result = Search.findTwoLines(searchRange, searchLines);
         }
-    }
-
-    findSingleLine(array, searchString){
-        let results = [];
-        array.reduce((a,i,e)=>{
-            if (e.includes(searchString)){
-                results.push(i);
-            }
-        })
-        return i;
+        return result;
     }
 
 }
