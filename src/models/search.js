@@ -1,13 +1,11 @@
-export default class Search{
-    constructor();
-    
+class Search{    
     static findSingleLine(array, searchString){
-        let results = [];
-        array.reduce((a,i,e)=>{
+        let results = Array.from(array).reduce((a,e,i)=>{
             if (e.includes(searchString)){
-                results.push(i);
+                a.push(i);
             }
-        })
+            return a;
+        }, [])
         return results;
     }
 
@@ -44,3 +42,5 @@ export default class Search{
         return (array[index].endsWith(first) && array[index+length-1].startsWith(last));
     }
 }
+
+module.exports=Search;
