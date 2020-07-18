@@ -35,6 +35,9 @@ class File{
     }
 
     searchChanges(searchLines, searchType){
+        if (searchLines.length === 0){
+            return null;
+        }
         let searchRange =[];
         let result;
         switch(searchType){

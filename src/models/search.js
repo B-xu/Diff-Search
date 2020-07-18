@@ -1,24 +1,33 @@
 class Search{    
     static findSingleLine(array, searchString){
-        let results = Array.from(array).reduce((a,e,i)=>{
-            if (e.includes(searchString)){
-                a.push(i);
-            }
-            return a;
-        }, [])
-        return results;
+        if (searchString){
+            let results = Array.from(array).reduce((a,e,i)=>{
+                if (e.includes(searchString)){
+                    a.push(i);
+                }
+                return a;
+            }, [])
+            return results;
+        }
+        return null;
+        
     }
 
     static findTwoLines(array, searchLines){
-        let results = [];
-        searchDuration = array.length - searchLines.length + 1;
-        for (i=0; i< searchDuration; i++){
-            if (array[i].endsWith(searchLines[0]) 
-                && array[i+1].startsWith(searchLines[1])){
-                    results.push(i);
-                }
+        if (searchLines && !searchLines.includes('') && searchLines.length ===2){
+            let results = [];
+            let searchDuration = array.length - searchLines.length + 1;
+            for (let i=0; i< searchDuration; i++){
+                if (array[i].endsWith(searchLines[0]) 
+                    && array[i+1].startsWith(searchLines[1])){
+                        results.push(i);
+                        i++;
+                    }
+            }
+            return results;
         }
-        return results;
+        return null;
+        
     }
 
     static findMultipleLines(array, searchLines){
