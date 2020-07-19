@@ -1,4 +1,4 @@
-const Search = require('../models/search.js');
+import Search from'../models/search.js';
 
 describe('Single line tests',()=>{
     test('Finds single line in array of one element -- leading',() =>{

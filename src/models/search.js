@@ -1,4 +1,4 @@
-class Search{    
+export default class Search{    
     static findSingleLine(array, searchString){
         if (searchString){
             let results = Array.from(array).reduce((a,e,i)=>{
@@ -51,5 +51,3 @@ class Search{
         return (array[index].endsWith(first) && array[index+length-1].startsWith(last));
     }
 }
-
-module.exports=Search;

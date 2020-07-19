@@ -1,4 +1,4 @@
-export const searchTypes = {ALL:'all', ADD:'add', DEL:'delete'};
+const searchTypes = {ALL:'all', ADD:'add', DEL:'delete'};
 import Search from './search.js'
 class File{
     name = '';
@@ -65,4 +65,4 @@ class File{
 
 }
 
-export default File;
+export {File, searchTypes};
