@@ -32,6 +32,11 @@ describe('Single line tests',()=>{
         expect(Search.findSingleLine([], 'he')).toEqual(expected);
     });
 
+    test('Finds single line in array of empty strings',()=>{
+        let expected=[];
+        expect(Search.findSingleLine(["","","",""], 'he')).toEqual(expected);
+    });
+
     test('Finds single line (empty string) in array',()=>{
         let expected=null;
         expect(Search.findSingleLine(['whos there', 'no one'], '')).toEqual(expected);
@@ -95,7 +100,12 @@ describe('Two line tests',()=>{
         expect(Search.findTwoLines([], ['os','there'])).toEqual(expected);
     });
 
-    test('Finds two lines in array with empty input',()=>{
+    test('Finds two lines in array of empty strings',()=>{
+        let expected=[];
+        expect(Search.findTwoLines(['','','',''], ['os','there'])).toEqual(expected);
+    });
+
+    test('Finds two lines in array with empty input search',()=>{
         let expected=null;
         expect(Search.findTwoLines(['whos','there', 'sos', "thereby"], ['os',''])).toEqual(expected);
     });

@@ -1,29 +1,36 @@
 const searchTypes = {ALL:'all', ADD:'add', DEL:'delete'};
-import Search from './search.js'
+const lineTypes = {ADD:'add', DEL:'delete',SAME:'same'};
+import Search from './search.js';
+
 class File{
     name = '';
     changes=[];
     addChanges=[]
     deletedChanges=[];
-    concat_changes;
+    unChangedLines=[];
 
     constructor(name, changes){
         this.name = name;
         this.changes=changes.map(change=>change.line);
         this.setAddChanges(changes);
         this.setDelChanges(changes);
+        this.setSameLines(changes);
     }
 
     setAddChanges(changes){
-        this.addChanges = changes.map(change=>this.setBooleanChanges(true,change));
+        this.addChanges = changes.map(change=>this.setBooleanChanges(lineTypes.ADD,change));
     }
 
     setDelChanges(changes){
-        this.deletedChanges = changes.map(change=>this.setBooleanChanges(false, change))
+        this.deletedChanges = changes.map(change=>this.setBooleanChanges(lineTypes.DEL, change))
     }
 
-    setBooleanChanges(bool, change){
-        if (change.isAdd === bool){
+    setSameLines(changes){
+        this.unChangedLines = changes.map(change=>this.setBooleanChanges(lineTypes.SAME,change));
+    }
+
+    setBooleanChanges(linetype, change){
+        if (change.type === linetype){
             return change.line;
         } else {
             return '';

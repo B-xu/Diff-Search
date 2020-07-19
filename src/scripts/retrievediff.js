@@ -4,6 +4,7 @@ export default class retrieveDiff {
 
     constructor(){
     }
+    
     retrieveFiles(fileNames, changedLines){
         let files = []
         fileNames.forEach(function(name, index){

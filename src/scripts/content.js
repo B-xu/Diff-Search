@@ -1,3 +1,5 @@
+const lineTypes = {ADD:'add', DEL:'delete',SAME:'same'};
+
 function retrieveFileData(){
     let fileChanges = [...document.getElementsByClassName('diff-table js-diff-table')];
     let changes=[];
@@ -31,9 +33,12 @@ function retrieveChangedFileLines(fileElement, className){
         if (!classname.includes('blob-code-inner') && !className.includes('blob-code-hunk') ){
             lineObj = {};
             if (isAdd(classname)){
-                lineObj.isAdd = true;
-            } else{
-                lineObj.isAdd = false;
+                lineObj.type = lineTypes.ADD;
+            } else if (isDel(className)){
+                lineObj.type = lineTypes.DEL;
+            }
+            else{
+                lineObj.type = lineTypes.SAME;
             }
             lineObj.line = element.getElementsByTagName('span')[0].textContent;
             lines.push(lineObj);
@@ -46,7 +51,11 @@ function isAdd(classname){
     return classname.includes('blob-code-addition');
 }
 
+function isDel(classname){
+    return classname.includes('blob-code-deletion');
+}
 
-data = retrieveFileData();
+
+let data = retrieveFileData();
 console.log(data);
 chrome.runtime.sendMessage(data);
