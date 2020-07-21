@@ -38,11 +38,13 @@ export default class Search{
                 !searchLines.includes('') && searchLines.length >= 3){
                     let results = [];
                     let searchDuration = array.length - searchLines.length + 1;
+                    outer: 
                     for (let i=0; i< searchDuration; i++){
                         if (this.checkInitial(array, searchLines[0], searchLines[searchLines.length-1], i, searchLines.length)){
-                            for (let j=1; j< searchLines.length-2; j++){
-                                if (array[i+1] !== searchLines[j+1]){
-                                    break;
+                            let j = 1;
+                            for (j; j< searchLines.length-1; j++){
+                                if (array[i+j] !== searchLines[j]){
+                                    continue outer;
                                 }
                             }
                             results.push(i);

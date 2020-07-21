@@ -63,6 +63,11 @@ describe('Two line tests',()=>{
         expect(Search.findTwoLines(['whos','thereos', "theres"], ['os','there'])).toEqual(expected);
     });
 
+    test('Finds two lines in larger array with separation',()=>{
+        let expected=[];
+        expect(Search.findTwoLines(['os','la', "theres"], ['os','there'])).toEqual(expected);
+    });
+
     //exceptional cases
     test('Finds two lines in empty array',()=>{
         let expected=[];

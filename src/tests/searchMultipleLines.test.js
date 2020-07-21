@@ -80,6 +80,16 @@ describe('Multi-line tests',()=>{
         expect(Search.findMultipleLines(['bib','a'], ['bib','a','dog'])).toEqual(expected);
     });
 
+    test('Find multiple lines (1 un-matched) in longer array',()=>{
+        let expected = [];
+        expect(Search.findMultipleLines(['bib','app','dog'], ['bib','apple','dog'])).toEqual(expected);
+    });
+
+    test('Find multiple lines (middle line diff) in longer array',()=>{
+        let expected = [];
+        expect(Search.findMultipleLines(['bib','','dog'], ['bib','apple','dog'])).toEqual(expected);
+    });
+
     //exceptional cases
     
     test('Find multiple lines (empty strings) in small array',()=>{
