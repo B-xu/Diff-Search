@@ -1,7 +1,7 @@
 export default class Search{    
     static findSingleLine(array, searchString){
-        if (searchString){
-            let results = Array.from(array).reduce((a,e,i)=>{
+        if (searchString && typeof searchString === 'string' && Array.isArray(array) && this.checkArrayIsStringOnly(array)){
+            let results = array.reduce((a,e,i)=>{
                 if (e.includes(searchString)){
                     a.push(i);
                 }
@@ -14,7 +14,9 @@ export default class Search{
     }
 
     static findTwoLines(array, searchLines){
-        if (searchLines && !searchLines.includes('') && searchLines.length ===2){
+        if (Array.isArray(array) && this.checkArrayIsStringOnly(array) &&
+                Array.isArray(searchLines) && this.checkArrayIsStringOnly(searchLines) && 
+                !searchLines.includes('') && searchLines.length ===2){
             let results = [];
             let searchDuration = array.length - searchLines.length + 1;
             for (let i=0; i< searchDuration; i++){
@@ -31,23 +33,37 @@ export default class Search{
     }
 
     static findMultipleLines(array, searchLines){
-        let results = [];
-        searchDuration = array.length - searchLines.length + 1;
-        for (i=0; i< searchDuration; i++){
-            if (this.checkInitial(array, searchLines[0], searchLines[searchLines.length-1]), i, searchLines.length){
-                for (j=1; j< searchLines.length-2; j++){
-                    if (array[i+1] !== searchLines[j+1]){
-                        break;
-                    }
-                }
-                results.push(i);
+        if (Array.isArray(array) && this.checkArrayIsStringOnly(array) &&
+                Array.isArray(searchLines) && this.checkArrayIsStringOnly(searchLines) && 
+                !searchLines.includes('') && searchLines.length >= 3){
+                    let results = [];
+                    let searchDuration = array.length - searchLines.length + 1;
+                    for (let i=0; i< searchDuration; i++){
+                        if (this.checkInitial(array, searchLines[0], searchLines[searchLines.length-1], i, searchLines.length)){
+                            for (let j=1; j< searchLines.length-2; j++){
+                                if (array[i+1] !== searchLines[j+1]){
+                                    break;
+                                }
+                            }
+                            results.push(i);
+                            i+= searchLines.length-1;
 
-            }
+                        }
+                    }
+                    return results;
         }
-        return results;
+        return null;
+        
     }
 
     static checkInitial(array, first, last, index, length){
+        if (index+length > array.length || !first || !last){
+            return false;
+        }
         return (array[index].endsWith(first) && array[index+length-1].startsWith(last));
+    }
+
+    static checkArrayIsStringOnly(array){
+        return array.every(i => (typeof i === "string"));
     }
 }
