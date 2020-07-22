@@ -93,7 +93,7 @@ describe('Multi-line tests',()=>{
     //exceptional cases
     
     test('Find multiple lines (empty strings) in small array',()=>{
-        let expected = null;
+        let expected = [0];
         expect(Search.findMultipleLines(['bob','the','builder'], ['','',''])).toEqual(expected);
     });
 

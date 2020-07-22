@@ -55,7 +55,14 @@ function isDel(classname){
     return classname.includes('blob-code-deletion');
 }
 
-
-let data = retrieveFileData();
-console.log(data);
-chrome.runtime.sendMessage(data);
+chrome.runtime.onMessage.addListener(
+    function (request, sender, sendResponse){
+        console.log(request);
+        if (request.type === 'file'){
+            let data = retrieveFileData();
+            console.log(data);
+            chrome.runtime.sendMessage(data);
+            return true;
+        }
+    }
+)

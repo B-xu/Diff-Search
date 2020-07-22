@@ -35,7 +35,7 @@ export default class Search{
     static findMultipleLines(array, searchLines){
         if (Array.isArray(array) && this.checkArrayIsStringOnly(array) &&
                 Array.isArray(searchLines) && this.checkArrayIsStringOnly(searchLines) && 
-                !searchLines.includes('') && searchLines.length >= 3){
+                searchLines.length >= 3){
                     let results = [];
                     let searchDuration = array.length - searchLines.length + 1;
                     outer: 

@@ -67,7 +67,11 @@ class File{
         } else {
             result = Search.findTwoLines(searchRange, searchLines);
         }
-        return result;
+        
+        if(result){
+            return result;
+        }
+        return [];
     }
 
 }
