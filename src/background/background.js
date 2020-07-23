@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(
                 chrome.tabs.sendMessage(tabs[0].id, {foundFiles:searchRes, type:'File results'}, function(response) {});  
             });
         }
-        return Promise.resolve("Dummy response to keep the console quiet");
+        return true;
     }
 );
 

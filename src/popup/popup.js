@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 console.log(request);
                 let y = request.foundFiles;
             }
-            return Promise.resolve("Dummy response to keep the console quiet");
+            return true;
         }
     );
     function pingContent (){

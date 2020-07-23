@@ -69,6 +69,6 @@ chrome.runtime.onMessage.addListener(
         } else {
             console.log(request.foundFiles)
         }
-        return Promise.resolve("Dummy response to keep the console quiet");
+        return true;
     }
 )
