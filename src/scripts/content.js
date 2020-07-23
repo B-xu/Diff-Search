@@ -10,6 +10,10 @@ function retrieveFileData(){
 
     let fileInfo = [...document.getElementsByClassName('file-info')];
     let names = retrieveFileNames(fileInfo);
+
+    while (names.length > changes.length){
+        names.pop();
+    }
     
     let payload = {names:names, changed:changes, type:'git-changes'};
     return payload;
@@ -62,7 +66,9 @@ chrome.runtime.onMessage.addListener(
             let data = retrieveFileData();
             console.log(data);
             chrome.runtime.sendMessage(data);
-            return true;
+        } else {
+            console.log(request.foundFiles)
         }
+        return Promise.resolve("Dummy response to keep the console quiet");
     }
 )

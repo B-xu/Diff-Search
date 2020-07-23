@@ -2,43 +2,44 @@ import retrieveDiff from '../scripts/retrievediff.js';
 import {searchTypes, File} from '../models/file.js'
 
 let retrieve = new retrieveDiff();
-function handleGitChanges(request){
-    let files = retrieve.retrieveFiles(request.names, request.changed);
-    console.log(files);
-}
-
-function handleSearchTerm(request){
-    let searchTerm = request.value;
-    console.log(searchTerm);
-
-    while (searchTerm.startsWith('\n')){
-        searchTerm = searchTerm.slice(0,2);
-    }
-    while (searchTerm.endsWith('\n')){
-        searchTerm = searchTerm.slice(searchTerm.length-2, searchTerm.length);
-    }
-    let searchLines = searchTerm.split('\n');
-    retrieve.addSearchLines(searchLines);
-}
+let status = {};
 
 function validateAndSearch(){
     let result;
-    if (retrieve.hasSearchLines()&& retrieve.hasFiles()){
+    if (status.hasFiles && status.hasSearch && 
+            retrieve.hasSearchLines() && retrieve.hasFiles()){
+        status = {};
         result = retrieve.search(searchTypes.ALL);
         console.log(result);
-        //TODO Send message
+        
+        return result;
     }
+    return false;
 }
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse){
         console.log(request);
         if (request.type === 'git-changes'){
-            handleGitChanges(request);
+            let files = retrieve.retrieveFiles(request.names, request.changed);
+            console.log(files);
+            status.hasFiles = true;
         } else {
-            handleSearchTerm(request);
+            sender = sendResponse;
+            let searcharr = retrieve.handleSearchTerm(request);
+            console.log(searcharr);
+            status.hasSearch = true;
         }
-        validateAndSearch();
-        
+        let searchRes = validateAndSearch();
+        if(searchRes){
+            console.log('Search result: ' + searchRes);
+            chrome.runtime.sendMessage({foundFiles:searchRes, type:'File results'});
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+                chrome.tabs.sendMessage(tabs[0].id, {foundFiles:searchRes, type:'File results'}, function(response) {});  
+            });
+        }
+        return Promise.resolve("Dummy response to keep the console quiet");
     }
 );
+
+export { validateAndSearch};
