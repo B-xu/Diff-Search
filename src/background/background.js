@@ -33,9 +33,10 @@ chrome.runtime.onMessage.addListener(
         let searchRes = validateAndSearch();
         if(searchRes){
             console.log('Search result: ' + searchRes);
-            chrome.runtime.sendMessage({foundFiles:searchRes, type:'File results'});
+            // chrome.runtime.sendMessage({foundFiles:searchRes, type:'File results'});
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-                chrome.tabs.sendMessage(tabs[0].id, {foundFiles:searchRes, type:'File results'}, function(response) {});  
+                chrome.tabs.sendMessage(tabs[0].id, {foundFiles:searchRes, type:'File results', 
+                                searchLength: retrieve.getSearchLinesLength(), lastLineLen: retrieve.getLastSearchLineLength()}, function(response) {});  
             });
         }
         return true;

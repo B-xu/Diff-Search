@@ -53,4 +53,12 @@ export default class retrieveDiff {
         return result;
     }
 
+    getSearchLinesLength(){
+        return this.searchLines.length;
+    }
+
+    getLastSearchLineLength(){
+        return this.searchLines[this.searchLines.length-1].length;
+    }
+
 }

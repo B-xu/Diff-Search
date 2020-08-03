@@ -1,5 +1,7 @@
 const lineTypes = {ADD:'add', DEL:'delete',SAME:'same'};
 
+let files = {};
+
 function retrieveFileData(){
     let fileChanges = [...document.getElementsByClassName('diff-table js-diff-table')];
     let changes=[];
@@ -14,6 +16,12 @@ function retrieveFileData(){
     while (names.length > changes.length){
         names.pop();
     }
+
+    for(let i=0; i< names.length; i++){
+        files[names[i]] = changes[i]
+    }
+
+    console.log(files)
     
     let payload = {names:names, changed:changes, type:'git-changes'};
     return payload;
