@@ -4,12 +4,12 @@ describe('Multi-line tests',()=>{
     //general cases
 
     test('Find multiple lines in small array -- all full-length',()=>{
-        let expected = [0];
+        let expected = [{0:0}];
         expect(Search.findMultipleLines(['bob','the','builder'], ['bob','the','builder'])).toEqual(expected);
     });
 
     test('Find multiple lines in small array -- trailing + leading',()=>{
-        let expected = [0];
+        let expected = [{0:1}];
         expect(Search.findMultipleLines(['bob','the','builder'], ['ob','the','build'])).toEqual(expected);
     });
 
@@ -19,49 +19,49 @@ describe('Multi-line tests',()=>{
     });
 
     test('Find multiple lines in small array -- trailing + full',()=>{
-        let expected = [0];
+        let expected = [{0:2}];
         expect(Search.findMultipleLines(['bob','the','builder'], ['b','the','builder'])).toEqual(expected);
     });
 
     test('Find multiple lines in small array -- full + leading',()=>{
-        let expected = [0];
+        let expected = [{0:0}];
         expect(Search.findMultipleLines(['bob','the','builder'], ['bob','the','bu'])).toEqual(expected);
     });
 
     test('Find multiple lines in large array -- full + full',()=>{
-        let expected = [2];
+        let expected = [{2:0}];
         expect(Search.findMultipleLines(['love','happy','bob','the','builder'], ['bob','the','builder'])).toEqual(expected);
     });
 
     test('Find multiple lines in large array -- trailing + full',()=>{
-        let expected = [1];
+        let expected = [{1:1}];
         expect(Search.findMultipleLines(['love','bob','the','builder','coy'], ['ob','the','builder'])).toEqual(expected);
     });
 
     test('Find multiple lines in large array -- trailing + leading',()=>{
-        let expected = [1];
+        let expected = [{1:1}];
         expect(Search.findMultipleLines(['love','bob','the','builder','coy'], ['ob','the','bu'])).toEqual(expected);
     });
 
     test('Find multiple lines in large array -- full + leading',()=>{
-        let expected = [1];
+        let expected = [{1:0}];
         expect(Search.findMultipleLines(['love','bob','the','builder','coy'], ['bob','the','builder'])).toEqual(expected);
     });
 
     test('Find multiple lines in large array -- multiple instances',()=>{
-        let expected = [1,5];
+        let expected = [{1:1},{5:3}];
         expect(Search.findMultipleLines(['love','bob','the','builder','iron','kebob','the','builder'], ['ob','the','builder'])).toEqual(expected);
     });
 
     test('Find multiple lines in large array -- multiple instances separated by empty strings',()=>{
-        let expected = [1,8];
+        let expected = [{1:1},{8:3}];
         expect(Search.findMultipleLines(['love','bob','the','builder','','','','','kebob','the','builder'], ['ob','the','builder'])).toEqual(expected);
     });
 
     //boundary cases
 
     test('Find multiple lines in large array -- multiple instances with overlap',()=>{
-        let expected = [1];
+        let expected = [{1:1}];
         expect(Search.findMultipleLines(['love','bob','the','builderob','the','builder'], ['ob','the','builder'])).toEqual(expected);
     });
 

@@ -2,39 +2,39 @@ import Search from'../models/search.js';
 
 describe('Single line tests',()=>{
     test('Finds single line in array of one element -- leading',() =>{
-        let expected = [0];
+        let expected = [{0:0}];
         expect(Search.findSingleLine(['hello'],'he')).toEqual(expected);
     });
 
     test('Finds single line in array of one element -- trailing',() =>{
-        let expected = [0];
+        let expected = [{0:3}];
         expect(Search.findSingleLine(['whyhell'],'he')).toEqual(expected);
     });
 
     test('Finds single line in array of one element -- centered',() =>{
-        let expected = [0];
+        let expected = [{0:3}];
         expect(Search.findSingleLine(['whyhello'],'he')).toEqual(expected);
     });
     
     test('Finds single line in array of multiple elements -- centered, leading, trailing',()=>{
-        let expected = [0,2,3];
+        let expected = [{0:1},{2:0},{3:1}];
         expect(Search.findSingleLine(['jhello', 'bye','helloween', 'thehe'],'he')).toEqual(expected);
     });
 
     test('Finds single line which occupies entire string in array of multiple elements',()=>{
-        let expected = [0,1,3,4];
+        let expected = [{0:0},{1:1},{3:2},{4:0}];
         expect(Search.findSingleLine(['hello', "jhello", "soon", "lehe","he"], 'he')).toEqual(expected);
     });
 
     //boundary cases
 
     test('word occurs multiple times in a line',()=>{
-        let expected = [0,2];
+        let expected = [{0:0},{2:1}];
         expect(Search.findSingleLine(['hehe','lala','thehe'], 'he')).toEqual(expected);
     });
 
     test('word occurs multiple times in separated by empty strings',()=>{
-        let expected = [0,5];
+        let expected = [{0:0},{5:1}];
         expect(Search.findSingleLine(['hehe','','','','','thehe'], 'he')).toEqual(expected);
     });
 

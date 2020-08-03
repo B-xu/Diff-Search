@@ -2,52 +2,52 @@ import Search from'../models/search.js';
 
 describe('Two line tests',()=>{
     test('Finds two lines in small array -- both full-length',()=>{
-        let expected=[0];
+        let expected=[{0:0}];
         expect(Search.findTwoLines(['whos','there'], ['whos','there'])).toEqual(expected);
     });
 
     test('Finds two lines in small array -- trailing + leading',()=>{
-        let expected=[0];
+        let expected=[{0:2}];
         expect(Search.findTwoLines(['whos','there'], ['os','the'])).toEqual(expected);
     });
 
     test('Finds two lines in small array -- full + leading',()=>{
-        let expected=[0];
+        let expected=[{0:0}];
         expect(Search.findTwoLines(['whos','there'], ['whos','the'])).toEqual(expected);
     });
 
     test('Finds two lines in small array -- trailing + full',()=>{
-        let expected=[0];
+        let expected=[{0:2}];
         expect(Search.findTwoLines(['whos','there'], ['os','there'])).toEqual(expected);
     });
 
     test('Finds two lines in larger array -- standard (trailing+leading)',()=>{
-        let expected=[0,3];
+        let expected=[{0:2},{3:1}];
         expect(Search.findTwoLines(['whos','there', "so", 'los','therew'], ['os','there'])).toEqual(expected);
     });
 
     test('Finds two lines in larger array -- standard (full+leading)',()=>{
-        let expected=[0,3];
+        let expected=[{0:2},{3:0}];
         expect(Search.findTwoLines(['whos','there', "so", 'os','therew'], ['os','there'])).toEqual(expected);
     });
 
     test('Finds two lines in larger array -- standard (trailing+full)',()=>{
-        let expected=[0,3];
+        let expected=[{0:2},{3:1}];
         expect(Search.findTwoLines(['whos','there', "so", 'los','there'], ['os','there'])).toEqual(expected);
     });
 
     test('Finds two lines in larger array -- standard (full+full)',()=>{
-        let expected=[0,3];
+        let expected=[{0:2},{3:0}];
         expect(Search.findTwoLines(['whos','there', "so", 'os','there'], ['os','there'])).toEqual(expected);
     });
 
     test('Finds two lines in larger array with multiple occurences',()=>{
-        let expected=[0,2];
+        let expected=[{0:2},{2:1}];
         expect(Search.findTwoLines(['whos','there', 'sos', "thereby"], ['os','there'])).toEqual(expected);
     });
 
     test('Find multiple lines in large array -- multiple instances separated by empty strings',()=>{
-        let expected = [2,9];
+        let expected = [{2:0},{9:1}];
         expect(Search.findTwoLines(['love','bob','the','builder','','','','','kebob','sthe','builder'], ['the','builder'])).toEqual(expected);
     });
 
@@ -59,7 +59,7 @@ describe('Two line tests',()=>{
     });
 
     test('Finds two lines in larger array with overlap',()=>{
-        let expected=[0];
+        let expected=[{0:2}];
         expect(Search.findTwoLines(['whos','thereos', "theres"], ['os','there'])).toEqual(expected);
     });
 

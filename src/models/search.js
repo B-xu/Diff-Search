@@ -3,7 +3,10 @@ export default class Search{
         if (searchString && typeof searchString === 'string' && Array.isArray(array) && this.checkArrayIsStringOnly(array)){
             let results = array.reduce((a,e,i)=>{
                 if (e.includes(searchString)){
-                    a.push(i);
+                    let index = e.indexOf(searchString);
+                    let result = {};
+                    result[i] = index;
+                    a.push(result);
                 }
                 return a;
             }, [])
@@ -22,7 +25,9 @@ export default class Search{
             for (let i=0; i< searchDuration; i++){
                 if (array[i].endsWith(searchLines[0]) 
                     && array[i+1].startsWith(searchLines[1])){
-                        results.push(i);
+                        let result = {};
+                        result[i] = array[i].lastIndexOf(searchLines[0]);
+                        results.push(result);
                         i++;
                     }
             }
@@ -47,7 +52,9 @@ export default class Search{
                                     continue outer;
                                 }
                             }
-                            results.push(i);
+                            let result = {};
+                            result[i] = array[i].lastIndexOf(searchLines[0]);
+                            results.push(result);
                             i+= searchLines.length-1;
 
                         }
