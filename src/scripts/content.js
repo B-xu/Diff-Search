@@ -103,24 +103,50 @@ function highlightSpanChildren(span, startingIndex, lineLen){
     let starter = -1;
     let end = startingIndex + lineLen -1;
     let pastStarter = false;
+    let spanClass = findSpanClass(span);
     for (let child of span.childNodes){
         starter += child.textContent.length;
-        if (!child.innerHTML){
-            continue;
-        } else if (starter >= end){
+        if (starter >= end){
             let endIndex = child.textContent.length - (starter-end);
-            let before = child.innerHTML.substring(0,endIndex);
-            let after = child.innerHTML.substring(endIndex, child.textContent.length);
-            child.innerHTML =`<mark>${before}</mark>${after}`
+            let before = child.textContent.substring(0,endIndex);
+            let after = child.textContent.substring(endIndex, child.textContent.length);
+            populateChildElement(child, before, after, spanClass,true);
             break;
         } else if (pastStarter) {
-            child.innerHTML = `<mark>${child.innerHTML}</mark>`
+            populateChildElement(child, child.textContent, '', spanClass,true);
         } else if (starter > startingIndex ){
             let start = child.textContent.length - 1 - (starter-startingIndex);
-            let before  = child.innerHTML.substring(0,start);
-            let after = child.innerHTML.substring(start, child.innerHTML.length)
-            child.innerHTML =`${before}<mark>${after}</mark>`
+            let before  = child.textContent.substring(0,start);
+            let after = child.textContent.substring(start, child.textContent.length)
+            populateChildElement(child, before, after, spanClass, false);
             pastStarter = true;
+        }
+    }
+}
+
+function populateChildElement(child, before, after, childClass, isLeading){
+    if (child.innerHTML){
+        if (isLeading){
+            child.innerHTML =`<mark>${before}</mark>${after}`;
+        } else {
+            child.innerHTML =`${before}<mark>${after}</mark>`;
+        }
+    } else {
+        let e = document.createElement('span');
+        e.className = childClass;
+        if (isLeading){
+            e.innerHTML =`<mark>${before}</mark>${after}`;
+        }else {
+            e.innerHTML =`${before}<mark>${after}</mark>`;
+        }
+        child.replaceWith(e);
+    }
+}
+
+function findSpanClass(span){
+    for (let child of span.childNodes){
+        if (child.innerHTML){
+            return child.className;
         }
     }
 }
