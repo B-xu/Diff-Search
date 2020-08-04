@@ -4,8 +4,7 @@
     "version": "1.0",
     "manifest_version": 2,
     "content_scripts": [
-        {"matches":["*://github.com/*/*/pull/*/commits/*",
-                     "*://github.com/*/*/pull/*/files",
+        {"matches":["*://github.com/*/*/pull/*",
                      "*://github.com/*/*/commit/*"],
         "js":["scripts/content.js"]}
     ],
