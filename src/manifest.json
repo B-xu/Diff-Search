@@ -1,6 +1,6 @@
 {
     "name": "Pull Request Search",
-    "description": "A search tool that works inside Github/Bitbucket pull requests",
+    "description": "A search tool that works for Github diffs",
     "version": "1.0",
     "manifest_version": 2,
     "content_scripts": [
@@ -12,9 +12,12 @@
     ],
     "browser_action":{
         "default_popup": "popup/popup.html",
-        "default_title": "test popup"
+        "default_title": "Search in Github"
     },
     "background":{
         "page":"background/background.html"
-    }
+    },
+    "icons": {
+        "48": "icons/icon48.png",
+       "128": "icons/icon128.png" }
 }
