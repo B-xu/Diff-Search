@@ -5,8 +5,11 @@ let files = {};
 function retrieveFileData(){
     let fileChanges = [...document.getElementsByClassName('diff-table js-diff-table')];
     let changes=[];
+    let spans = []
     fileChanges.forEach(change=>{
-        changes.push(retrieveChangedFileLines(change, 'blob-code'))   
+        let temp = [];
+        changes.push(retrieveChangedFileLines(change, 'blob-code', temp))  
+        spans.push(temp); 
     })
 
 
@@ -18,7 +21,7 @@ function retrieveFileData(){
     }
 
     for(let i=0; i< names.length; i++){
-        files[names[i]] = changes[i]
+        files[names[i]] = spans[i]
     }
 
     console.log(files)
@@ -36,7 +39,7 @@ function retrieveFileNames(fileInfoArray){
     return names;
 }
 
-function retrieveChangedFileLines(fileElement, className){
+function retrieveChangedFileLines(fileElement, className,spanArr){
     let lines = [];
     
     let elements = [...fileElement.getElementsByClassName(className)];
@@ -54,6 +57,7 @@ function retrieveChangedFileLines(fileElement, className){
             }
             lineObj.line = element.getElementsByTagName('span')[0].textContent;
             lines.push(lineObj);
+            spanArr.push(element.getElementsByTagName('span')[0]);
         }
     })
     return lines;
@@ -67,6 +71,62 @@ function isDel(classname){
     return classname.includes('blob-code-deletion');
 }
 
+function findLines(fileChanges, searchLen, lastLineLen){
+    fileChanges.forEach(fileData=>{
+        let fileSpans = files[fileData.filename];
+        let foundLines = fileData.lines;
+        highlightLines(fileSpans, foundLines, searchLen, lastLineLen);
+    })
+}
+
+function highlightLines(spans, lines, searchLen, lastLineLen){
+    if (searchLen === 1){
+        highlightSingleLine(spans,lines, lastLineLen);
+    } else if (searchLen === 2) {
+        console.log('In progress');
+    } else {
+        console.log('In progress');
+    }
+}
+
+function highlightSingleLine(spans,lines, lineLen){
+    lines.forEach(line=>{
+        let foundLine = Object.keys(line)[0];
+        let startingIndex = line[foundLine];
+
+        let linespan = spans[foundLine];
+        highlightSpanChildren(linespan, startingIndex, lineLen)
+    })
+}
+
+function highlightSpanChildren(span, startingIndex, lineLen){
+    let starter = -1;
+    let end = startingIndex + lineLen -1;
+    let pastStarter = false;
+    for (let child of span.childNodes){
+        starter += child.textContent.length;
+        if (!child.innerHTML){
+            continue;
+        } else if (starter >= end){
+            let endIndex = child.textContent.length - (starter-end);
+            let before = child.innerHTML.substring(0,endIndex);
+            let after = child.innerHTML.substring(endIndex, child.textContent.length);
+            child.innerHTML =`<mark>${before}</mark>${after}`
+            break;
+        } else if (pastStarter) {
+            child.innerHTML = `<mark>${child.innerHTML}</mark>`
+        } else if (starter > startingIndex ){
+            let start = child.textContent.length - 1 - (starter-startingIndex);
+            let before  = child.innerHTML.substring(0,start);
+            let after = child.innerHTML.substring(start, child.innerHTML.length)
+            child.innerHTML =`${before}<mark>${after}</mark>`
+            pastStarter = true;
+        }
+    }
+}
+
+
+
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse){
         console.log(request);
@@ -76,6 +136,7 @@ chrome.runtime.onMessage.addListener(
             chrome.runtime.sendMessage(data);
         } else {
             console.log(request.foundFiles)
+            findLines(request.foundFiles, request.searchLength, request.lastLineLen);
         }
         return true;
     }
