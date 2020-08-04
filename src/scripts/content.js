@@ -83,10 +83,40 @@ function highlightLines(spans, lines, searchLen, lastLineLen){
     if (searchLen === 1){
         highlightSingleLine(spans,lines, lastLineLen);
     } else if (searchLen === 2) {
-        console.log('In progress');
+        highlightTwoLines(spans,lines, lastLineLen);
     } else {
-        console.log('In progress');
+        highlightMultipleLines(spans,lines, searchLen, lastLineLen);
     }
+}
+
+function highlightMultipleLines(spans, lines, searchLen, lineLen){
+    lines.forEach(line=>{
+        let foundLine = Object.keys(line)[0];
+        let startingIndex = line[foundLine];
+
+        let firstLine = spans[foundLine];
+        let lastLine = spans[Number(foundLine)+searchLen-1];
+
+        highlightSpanChildren(firstLine, startingIndex, firstLine.length-startingIndex);
+        highlightSpanChildren(lastLine, 0, lineLen);
+        
+        for (let i = 1; i< searchLen-1; i++){
+            highlightAllSpanChildren(spans[Number(foundLine)+i]);
+        }
+    })
+}
+
+function highlightTwoLines(spans, lines, lineLen){
+    lines.forEach(line=>{
+        let foundLine = Object.keys(line)[0];
+        let startingIndex = line[foundLine];
+
+        let firstLine = spans[foundLine];
+        let secondLine = spans[Number(foundLine)+1];
+
+        highlightSpanChildren(firstLine, startingIndex, firstLine.length-startingIndex);
+        highlightSpanChildren(secondLine, 0, lineLen);
+    })
 }
 
 function highlightSingleLine(spans,lines, lineLen){
@@ -151,7 +181,12 @@ function findSpanClass(span){
     }
 }
 
-
+function highlightAllSpanChildren(span){
+    let spanClass = findSpanClass(span);
+    span.childNodes.forEach(child=>{
+        populateChildElement(child, child.textContent,'',spanClass, true);
+    })
+}
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse){
