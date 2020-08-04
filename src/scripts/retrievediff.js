@@ -35,6 +35,7 @@ export default class retrieveDiff {
         while (searchTerm.endsWith('\n')){
             searchTerm = searchTerm.slice(searchTerm.length-2, searchTerm.length);
         }
+        searchTerm = searchTerm.trim();
         let searchLines = searchTerm.split('\n');
         this.addSearchLines(searchLines);
         return searchLines;
