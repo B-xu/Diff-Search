@@ -2,12 +2,6 @@ const searchTypes = {ALL:'all', ADD:'add', DEL:'delete'};
 const lineTypes = {ADD:'add', DEL:'delete',SAME:'same'};
 
 class File{
-    name = '';
-    changes=[];
-    addChanges=[]
-    deletedChanges=[];
-    unChangedLines=[];
-
     constructor(name, changes){
         this.name = name;
         this.changes=changes.map(change=>change.line);

@@ -1,7 +1,4 @@
 export default class retrieveDiff {
-    files = [];
-    searchLines = [];
-
     constructor(){
     }
 
