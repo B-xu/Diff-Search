@@ -157,17 +157,17 @@ function highlightSpanChildren(span, startingIndex, lineLen){
 function populateChildElement(child, before, after, childClass, isLeading){
     if (child.innerHTML){
         if (isLeading){
-            child.innerHTML =`<mark>${before}</mark>${after}`;
+            child.innerHTML =purifyInnerHTML(`<mark>${before}</mark>${after}`);
         } else {
-            child.innerHTML =`${before}<mark>${after}</mark>`;
+            child.innerHTML =purifyInnerHTML(`${before}<mark>${after}</mark>`);
         }
     } else {
         let e = document.createElement('span');
         e.className = childClass;
         if (isLeading){
-            e.innerHTML =`<mark>${before}</mark>${after}`;
+            e.innerHTML =purifyInnerHTML(`<mark>${before}</mark>${after}`);
         }else {
-            e.innerHTML =`${before}<mark>${after}</mark>`;
+            e.innerHTML =purifyInnerHTML(`${before}<mark>${after}</mark>`);
         }
         child.replaceWith(e);
     }
@@ -179,6 +179,10 @@ function findSpanClass(span){
             return child.className;
         }
     }
+}
+
+function purifyInnerHTML(input){
+    return DOMPurify.sanitize(input);
 }
 
 function highlightAllSpanChildren(span){

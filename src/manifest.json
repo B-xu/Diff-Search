@@ -6,7 +6,7 @@
     "content_scripts": [
         {"matches":["*://github.com/*/*/pull/*",
                      "*://github.com/*/*/commit/*"],
-        "js":["scripts/content.js"]}
+        "js":["scripts/content.js", "scripts/purify.min.js"]}
     ],
     "permissions": [
         "<all_urls>", "activeTab"
