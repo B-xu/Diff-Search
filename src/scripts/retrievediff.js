@@ -34,15 +34,6 @@ export default class retrieveDiff {
         this.searchLines = searchLines;
     }
 
-    search(searchType){
-        let result = [];
-        this.files.forEach(file=>{
-            let found = file.searchChanges(this.searchLines, searchType);
-            result.push({filename:file.name, lines:found});
-        })
-        return result;
-    }
-
     getFiles(){
         return this.files;
     }

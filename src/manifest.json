@@ -1,6 +1,6 @@
 {
     "name": "Pull Request Search",
-    "description": "A search tool that works for Github diffs",
+    "description": "A search tool that works for Github diffs and commits",
     "version": "1.0",
     "manifest_version": 2,
     "content_scripts": [

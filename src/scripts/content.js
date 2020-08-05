@@ -193,7 +193,7 @@ function highlightAllSpanChildren(span){
 }
 
 chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse){
+    function (request, sender){
         console.log(request);
         if (request.type === 'file'){
             let data = retrieveFileData();
@@ -203,6 +203,5 @@ chrome.runtime.onMessage.addListener(
             console.log(request.foundFiles)
             findLines(request.foundFiles, request.searchLength, request.lastLineLen);
         }
-        return true;
     }
 )
