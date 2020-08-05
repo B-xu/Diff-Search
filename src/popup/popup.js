@@ -11,11 +11,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     function pingContent (){
         let search = document.querySelector('textarea').value;
         if (search){
-            chrome.runtime.sendMessage({value:search, type:"search"});
+            if (!search.includes('\n') || search.split('\n').length<2){
+                document.querySelector('textarea').value= 'Why not just use Control F?'
+            } else {
+                chrome.runtime.sendMessage({value:search, type:"search"});
 
-            chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-                chrome.tabs.sendMessage(tabs[0].id, {type: "file"});  
-            });
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+                    chrome.tabs.sendMessage(tabs[0].id, {type: "file"});  
+                });
+            }
         }
         
         
