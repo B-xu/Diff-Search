@@ -1,4 +1,3 @@
-import {searchTypes,File} from '../models/file.js';
 export default class retrieveDiff {
     files = [];
     searchLines = [];
@@ -14,15 +13,8 @@ export default class retrieveDiff {
         return this.files.length > 0;
     }
     
-    retrieveFiles(fileNames, changedLines){
-        let files = []
-        fileNames.forEach(function(name, index){
-            let file = new File(name, changedLines[index]);
-            
-            files.push(file);
-        });
+    setFiles(files){
         this.files = files;
-        return files;
     }
 
     handleSearchTerm(request){
@@ -52,6 +44,14 @@ export default class retrieveDiff {
             result.push({filename:file.name, lines:found});
         })
         return result;
+    }
+
+    getFiles(){
+        return this.files;
+    }
+
+    getSearchLines(){
+        return this.searchLines;
     }
 
     getSearchLinesLength(){

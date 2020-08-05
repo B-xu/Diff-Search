@@ -1,5 +1,6 @@
 import retrieveDiff from '../scripts/retrievediff.js';
 import {searchTypes, File} from '../models/file.js'
+import Search from '../models/search.js'
 
 let retrieve = new retrieveDiff();
 let status = {};
@@ -9,7 +10,7 @@ function validateAndSearch(){
     if (status.hasFiles && status.hasSearch && 
             retrieve.hasSearchLines() && retrieve.hasFiles()){
         status = {};
-        result = retrieve.search(searchTypes.ALL);
+        result = searchFiles(searchTypes.ALL, retrieve.getFiles());
         console.log(result);
         
         return result;
@@ -17,12 +18,54 @@ function validateAndSearch(){
     return false;
 }
 
+function addFiles(fileNames, changedLines){
+    let files = []
+    fileNames.forEach(function(name, index){
+        let file = new File(name, changedLines[index]);
+        
+        files.push(file);
+    });
+    retrieve.setFiles(files);
+}
+
+function searchFiles(searchType, files){
+    let searchLines = retrieve.getSearchLines();
+    let result = [];
+    files.forEach(file=>{
+        let found = searchFile(file, searchLines,searchType);
+        result.push({filename:file.name, lines:found});
+    })
+    return result;
+}
+
+function searchFile(file,searchLines, searchType){
+    let result = [];
+    if (searchLines.length === 0){
+        return null;
+    }
+
+    let searchRange = file.getSearchRange(searchType);
+
+    if (searchLines.length >= 3){
+        result = Search.findMultipleLines(searchRange, searchLines);
+    } else if (searchLines.length === 1){
+        let searchLine = searchLines[0];
+        result = Search.findSingleLine(searchRange, searchLine);
+    } else {
+        result = Search.findTwoLines(searchRange, searchLines);
+    }
+    
+    if(result){
+        return result;
+    }
+    return [];
+}
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse){
         console.log(request);
         if (request.type === 'git-changes'){
-            let files = retrieve.retrieveFiles(request.names, request.changed);
-            console.log(files);
+            addFiles(request.names, request.changed);
             status.hasFiles = true;
         } else {
             sender = sendResponse;
@@ -43,4 +86,4 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-export { validateAndSearch};
+export {validateAndSearch};

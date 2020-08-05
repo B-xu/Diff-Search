@@ -1,6 +1,5 @@
 const searchTypes = {ALL:'all', ADD:'add', DEL:'delete'};
 const lineTypes = {ADD:'add', DEL:'delete',SAME:'same'};
-import Search from './search.js';
 
 class File{
     name = '';
@@ -38,15 +37,10 @@ class File{
     }
 
     setChanges(changes){
-        this.changes=changes;
-    }
+        this.changes=changes;    }
 
-    searchChanges(searchLines, searchType){
-        if (searchLines.length === 0){
-            return null;
-        }
+    getSearchRange( searchType){
         let searchRange =[];
-        let result;
         switch(searchType){
             case searchTypes.ALL:
                 searchRange = this.changes;
@@ -58,20 +52,7 @@ class File{
                 searchRange = this.deletedChanges;
                 break;
         }
-
-        if (searchLines.length >= 3){
-            result = Search.findMultipleLines(searchRange, searchLines);
-        } else if (searchLines.length === 1){
-            let searchLine = searchLines[0];
-            result = Search.findSingleLine(searchRange, searchLine);
-        } else {
-            result = Search.findTwoLines(searchRange, searchLines);
-        }
-        
-        if(result){
-            return result;
-        }
-        return [];
+        return searchRange;
     }
 
 }
