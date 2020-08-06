@@ -1,4 +1,4 @@
-# Diff-Search: 
+# Diff Search: 
 
 Diff Search is a Chrome/Firefox extension that allows you to search multiple lines in a Github commit or pull-request diff. Simply type or copy your search (of more than 1 line) into the search tool and it will highlight the relevant lines on the page. 
 
