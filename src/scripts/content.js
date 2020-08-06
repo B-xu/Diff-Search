@@ -97,7 +97,7 @@ function highlightMultipleLines(spans, lines, searchLen, lineLen){
         let firstLine = spans[foundLine];
         let lastLine = spans[Number(foundLine)+searchLen-1];
 
-        highlightSpanChildren(firstLine, startingIndex, firstLine.length-startingIndex);
+        highlightSpanChildren(firstLine, startingIndex, firstLine.textContent.length-startingIndex);
         highlightSpanChildren(lastLine, 0, lineLen);
         
         for (let i = 1; i< searchLen-1; i++){
@@ -114,7 +114,7 @@ function highlightTwoLines(spans, lines, lineLen){
         let firstLine = spans[foundLine];
         let secondLine = spans[Number(foundLine)+1];
 
-        highlightSpanChildren(firstLine, startingIndex, firstLine.length-startingIndex);
+        highlightSpanChildren(firstLine, startingIndex, firstLine.textContent.length-startingIndex);
         highlightSpanChildren(secondLine, 0, lineLen);
     })
 }
