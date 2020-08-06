@@ -1,5 +1,5 @@
 # Diff Search: 
-
+[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/dwyl/hapi-auth-jwt2.svg?maxAge=2592000)](https://codecov.io/gh/B-xu/Diff-Search/?branch=master)
 Diff Search is a Chrome/Firefox extension that allows you to search multiple lines in a Github commit or pull-request diff. Simply type or copy your search (of more than 1 line) into the search tool and it will highlight the relevant lines on the page. 
 
 ![Demo](demo.gif)
