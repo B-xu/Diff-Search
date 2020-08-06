@@ -12,14 +12,17 @@ class File{
 
     setAddChanges(changes){
         this.addChanges = changes.map(change=>this.setBooleanChanges(lineTypes.ADD,change));
+        return this.addChanges;
     }
 
     setDelChanges(changes){
         this.deletedChanges = changes.map(change=>this.setBooleanChanges(lineTypes.DEL, change))
+        return this.deletedChanges;
     }
 
     setSameLines(changes){
         this.unChangedLines = changes.map(change=>this.setBooleanChanges(lineTypes.SAME,change));
+        return this.unChangedLines;
     }
 
     setBooleanChanges(linetype, change){
@@ -29,9 +32,6 @@ class File{
             return '';
         }
     }
-
-    setChanges(changes){
-        this.changes=changes;    }
 
     getSearchRange( searchType){
         let searchRange =[];
