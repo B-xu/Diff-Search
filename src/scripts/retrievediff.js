@@ -16,13 +16,12 @@ export default class retrieveDiff {
 
     handleSearchTerm(request){
         let searchTerm = request.value;
-        console.log(searchTerm);
     
         while (searchTerm.startsWith('\n')){
-            searchTerm = searchTerm.slice(0,2);
+            searchTerm = searchTerm.slice(1,searchTerm.length);
         }
         while (searchTerm.endsWith('\n')){
-            searchTerm = searchTerm.slice(searchTerm.length-2, searchTerm.length);
+            searchTerm = searchTerm.slice(0,searchTerm.length-1);
         }
         searchTerm = searchTerm.trim();
         let searchLines = searchTerm.split('\n');
