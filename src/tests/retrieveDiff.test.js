@@ -1,5 +1,5 @@
 import RetrieveDiff from '../scripts/retrievediff.js';
-import { TestScheduler } from 'jest';
+import { File, searchtypes } from '../models/file.js';
 
 let retrieveDiff = new RetrieveDiff();
 describe('retrieveDiff tests',()=>{
@@ -10,6 +10,13 @@ describe('retrieveDiff tests',()=>{
         expect(retrieveDiff.hasSearchLines()).toBe(true);
         expect(retrieveDiff.getLastSearchLineLength()).toBe(5);
     }); 
+
+    test('getSet files',()=>{
+        let file = new File('test',[]);
+        retrieveDiff.setFiles([file]);
+        expect(retrieveDiff.hasFiles()).toBe(true);
+        expect(retrieveDiff.getFiles()[0]).toEqual(file);
+    })
 
     test('handleSearchTerm general test',()=>{
         let value = retrieveDiff.handleSearchTerm({value:'bob\nthe\nbuilder'});

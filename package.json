@@ -1,6 +1,11 @@
 {
   "devDependencies": {
+    "codecov": "^3.7.2",
     "jest": "^26.1.0"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   },
   "scripts": {
     "test": "jest"
