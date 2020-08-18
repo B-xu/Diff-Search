@@ -1,0 +1,13 @@
+textarea{
+    width:300px!important;
+    height: 100px;
+    margin: 10px;
+}
+
+button{
+    margin:6px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background-color: #175DDC!important;
+    border-color: #175DDC!important;
+}
