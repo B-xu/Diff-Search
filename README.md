@@ -14,7 +14,7 @@ You can load the extension into your browser through the browser's extension too
   3. Click the "Load unpacked extension" button, navigate to the `src` folder of your local extension instance, and click "Ok".
 - Firefox
   1. Type `about:debugging` in your address bar to bring up the add-ons page.
-  2. Click the `Load Temporary Add-on` button, navigate to the `src/manifest.json` file, and "Open".
+  2. Click the `Load Temporary Add-on` button, navigate to the `src/manifest.json` file, and click "Open".
 
 
 ## Keybindings
